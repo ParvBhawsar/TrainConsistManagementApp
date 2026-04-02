@@ -1,49 +1,64 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ==========================================================
  * MAIN CLASS - TrainConsistManagementApp
  * ==========================================================
- * Use Case 11: Validate Train ID & Cargo Codes (Regex)
+ * Use Case 12: Safety Compliance Check for Goods Bogies
  *
  * @author Developer
- * @version 11.0
+ * @version 12.0
  */
 
 public class TrainConsistManagementApp {
 
-    // Reusable validation methods for tests
-    public static boolean validateTrainId(String trainId) {
-        Pattern pattern = Pattern.compile("TRN-\\d{4}");
-        Matcher matcher = pattern.matcher(trainId);
-        return matcher.matches();
+    // Goods bogie model
+    static class GoodsBogie {
+        String type;
+        String cargo;
+
+        GoodsBogie(String type, String cargo) {
+            this.type = type;
+            this.cargo = cargo;
+        }
+
+        @Override
+        public String toString() {
+            return type + " -> " + cargo;
+        }
     }
 
-    public static boolean validateCargoCode(String cargoCode) {
-        Pattern pattern = Pattern.compile("PET-[A-Z]{2}");
-        Matcher matcher = pattern.matcher(cargoCode);
-        return matcher.matches();
+    // Reusable validation method for tests
+    public static boolean isTrainSafe(List<GoodsBogie> bogies) {
+        return bogies.stream()
+                .allMatch(b ->
+                        !b.type.equalsIgnoreCase("Cylindrical")
+                                || b.cargo.equalsIgnoreCase("Petroleum"));
     }
 
     public static void main(String[] args) {
 
-        System.out.println("==============================================");
-        System.out.println(" UC11 - Validate Train ID & Cargo Codes ");
-        System.out.println("==============================================\n");
+        System.out.println("==================================================");
+        System.out.println(" UC12 - Safety Compliance Check for Goods Bogies ");
+        System.out.println("==================================================\n");
 
-        String trainId = "TRN-1234";
-        String cargoCode = "PET-AB";
+        // Create goods bogie list
+        List<GoodsBogie> bogies = new ArrayList<>();
+        bogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        bogies.add(new GoodsBogie("Open", "Coal"));
+        bogies.add(new GoodsBogie("Box", "Grain"));
 
-        System.out.println("Train ID: " + trainId);
-        System.out.println("Cargo Code: " + cargoCode);
+        System.out.println("Goods Bogies:");
+        for (GoodsBogie b : bogies) {
+            System.out.println(b);
+        }
 
-        boolean trainValid = validateTrainId(trainId);
-        boolean cargoValid = validateCargoCode(cargoCode);
+        // Safety validation
+        boolean safe = isTrainSafe(bogies);
 
-        System.out.println("\nTrain ID Valid? " + trainValid);
-        System.out.println("Cargo Code Valid? " + cargoValid);
+        System.out.println("\nTrain Safety Compliant? " + safe);
 
-        System.out.println("\nUC11 regex validation completed...");
+        System.out.println("\nUC12 safety validation completed...");
     }
 }
