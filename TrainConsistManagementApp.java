@@ -4,41 +4,57 @@ import java.util.Arrays;
  * ==========================================================
  * MAIN CLASS - TrainConsistManagementApp
  * ==========================================================
- * Use Case 18: Linear Search for Bogie ID
+ * Use Case 19: Binary Search for Bogie ID
  *
  * @author Developer
- * @version 18.0
+ * @version 19.0
  */
 
 public class TrainConsistManagementApp {
 
-    // Reusable method for search + test cases
-    public static boolean linearSearch(String[] bogieIds, String target) {
-        for (String id : bogieIds) {
-            if (id.equals(target)) {
+    // Reusable method for binary search + tests
+    public static boolean binarySearch(String[] bogieIds, String target) {
+        Arrays.sort(bogieIds); // ensure sorted input
+
+        int low = 0;
+        int high = bogieIds.length - 1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            int compare = bogieIds[mid].compareTo(target);
+
+            if (compare == 0) {
                 return true;
+            } else if (compare < 0) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
             }
         }
+
         return false;
     }
 
     public static void main(String[] args) {
 
         System.out.println("==================================================");
-        System.out.println(" UC18 - Linear Search for Bogie ID ");
+        System.out.println(" UC19 - Binary Search for Bogie ID ");
         System.out.println("==================================================\n");
 
-        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
-        String searchKey = "BG309";
+        String[] bogieIds = {"BG309", "BG101", "BG550", "BG205", "BG412"};
+        String searchKey = "BG205";
 
-        System.out.println("Available Bogie IDs:");
+        System.out.println("Before Sorting:");
         System.out.println(Arrays.toString(bogieIds));
 
-        boolean found = linearSearch(bogieIds, searchKey);
+        boolean found = binarySearch(bogieIds, searchKey);
+
+        System.out.println("\nAfter Sorting:");
+        System.out.println(Arrays.toString(bogieIds));
 
         System.out.println("\nSearching for: " + searchKey);
         System.out.println("Bogie Found? " + found);
 
-        System.out.println("\nUC18 searching completed...");
+        System.out.println("\nUC19 binary search completed...");
     }
 }
