@@ -2,57 +2,70 @@
  * ==========================================================
  * MAIN CLASS - TrainConsistManagementApp
  * ==========================================================
- * Use Case 14: Handle Invalid Bogie Capacity
+ * Use Case 15: Safe Cargo Assignment Using try-catch-finally
  *
  * @author Developer
- * @version 14.0
+ * @version 15.0
  */
 
 public class TrainConsistManagementApp {
 
-    // Custom checked exception
-    static class InvalidCapacityException extends Exception {
-        public InvalidCapacityException(String message) {
+    // Custom runtime exception
+    static class CargoSafetyException extends RuntimeException {
+        public CargoSafetyException(String message) {
             super(message);
         }
     }
 
-    // Passenger bogie model
-    static class PassengerBogie {
-        String type;
-        int capacity;
+    // Goods bogie model
+    static class GoodsBogie {
+        String shape;
+        String cargo;
 
-        PassengerBogie(String type, int capacity) throws InvalidCapacityException {
-            if (capacity <= 0) {
-                throw new InvalidCapacityException("Capacity must be greater than zero");
+        GoodsBogie(String shape) {
+            this.shape = shape;
+        }
+
+        public void assignCargo(String cargo) {
+            try {
+                if (shape.equalsIgnoreCase("Rectangular")
+                        && cargo.equalsIgnoreCase("Petroleum")) {
+                    throw new CargoSafetyException(
+                            "Unsafe cargo assignment: Petroleum cannot be assigned to Rectangular bogie"
+                    );
+                }
+
+                this.cargo = cargo;
+                System.out.println("Cargo assigned successfully: " + cargo);
+
+            } catch (CargoSafetyException e) {
+                System.out.println("Exception: " + e.getMessage());
+
+            } finally {
+                System.out.println("Cargo assignment process completed.");
             }
-            this.type = type;
-            this.capacity = capacity;
         }
 
         @Override
         public String toString() {
-            return type + " -> " + capacity;
+            return shape + " -> " + cargo;
         }
     }
 
     public static void main(String[] args) {
 
         System.out.println("==================================================");
-        System.out.println(" UC14 - Handle Invalid Bogie Capacity ");
+        System.out.println(" UC15 - Safe Cargo Assignment ");
         System.out.println("==================================================\n");
 
-        try {
-            PassengerBogie validBogie = new PassengerBogie("Sleeper", 72);
-            System.out.println("Valid bogie created: " + validBogie);
+        GoodsBogie bogie1 = new GoodsBogie("Cylindrical");
+        bogie1.assignCargo("Petroleum");
 
-            // Uncomment to test invalid case
-            // PassengerBogie invalidBogie = new PassengerBogie("AC Chair", -10);
+        System.out.println();
 
-        } catch (InvalidCapacityException e) {
-            System.out.println("Exception: " + e.getMessage());
-        }
+        GoodsBogie bogie2 = new GoodsBogie("Rectangular");
+        bogie2.assignCargo("Petroleum");
 
-        System.out.println("\nUC14 exception handling completed...");
+        System.out.println("\nApplication continues safely...");
     }
 }
