@@ -4,46 +4,41 @@ import java.util.Arrays;
  * ==========================================================
  * MAIN CLASS - TrainConsistManagementApp
  * ==========================================================
- * Use Case 16: Sort Passenger Bogies by Capacity
- * (Bubble Sort – Algorithm Intro)
+ * Use Case 17: Sort Bogie Names Using Arrays.sort()
  *
  * @author Developer
- * @version 16.0
+ * @version 17.0
  */
 
 public class TrainConsistManagementApp {
 
-    // Reusable method for sorting + test cases
-    public static void bubbleSort(int[] capacities) {
-        int n = capacities.length;
-
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                if (capacities[j] > capacities[j + 1]) {
-                    int temp = capacities[j];
-                    capacities[j] = capacities[j + 1];
-                    capacities[j + 1] = temp;
-                }
-            }
-        }
+    // Reusable method for test cases
+    public static void sortBogieNames(String[] bogieNames) {
+        Arrays.sort(bogieNames);
     }
 
     public static void main(String[] args) {
 
         System.out.println("==================================================");
-        System.out.println(" UC16 - Bubble Sort Passenger Bogie Capacities ");
+        System.out.println(" UC17 - Sort Bogie Names Using Arrays.sort() ");
         System.out.println("==================================================\n");
 
-        int[] capacities = {72, 56, 24, 70, 60};
+        String[] bogieNames = {
+                "Sleeper",
+                "AC Chair",
+                "First Class",
+                "General",
+                "Luxury"
+        };
 
         System.out.println("Before Sorting:");
-        System.out.println(Arrays.toString(capacities));
+        System.out.println(Arrays.toString(bogieNames));
 
-        bubbleSort(capacities);
+        sortBogieNames(bogieNames);
 
-        System.out.println("\nAfter Bubble Sort:");
-        System.out.println(Arrays.toString(capacities));
+        System.out.println("\nAfter Sorting:");
+        System.out.println(Arrays.toString(bogieNames));
 
-        System.out.println("\nUC16 sorting completed...");
+        System.out.println("\nUC17 sorting completed...");
     }
 }
