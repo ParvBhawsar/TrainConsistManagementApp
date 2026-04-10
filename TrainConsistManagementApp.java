@@ -4,41 +4,41 @@ import java.util.Arrays;
  * ==========================================================
  * MAIN CLASS - TrainConsistManagementApp
  * ==========================================================
- * Use Case 17: Sort Bogie Names Using Arrays.sort()
+ * Use Case 18: Linear Search for Bogie ID
  *
  * @author Developer
- * @version 17.0
+ * @version 18.0
  */
 
 public class TrainConsistManagementApp {
 
-    // Reusable method for test cases
-    public static void sortBogieNames(String[] bogieNames) {
-        Arrays.sort(bogieNames);
+    // Reusable method for search + test cases
+    public static boolean linearSearch(String[] bogieIds, String target) {
+        for (String id : bogieIds) {
+            if (id.equals(target)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {
 
         System.out.println("==================================================");
-        System.out.println(" UC17 - Sort Bogie Names Using Arrays.sort() ");
+        System.out.println(" UC18 - Linear Search for Bogie ID ");
         System.out.println("==================================================\n");
 
-        String[] bogieNames = {
-                "Sleeper",
-                "AC Chair",
-                "First Class",
-                "General",
-                "Luxury"
-        };
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        String searchKey = "BG309";
 
-        System.out.println("Before Sorting:");
-        System.out.println(Arrays.toString(bogieNames));
+        System.out.println("Available Bogie IDs:");
+        System.out.println(Arrays.toString(bogieIds));
 
-        sortBogieNames(bogieNames);
+        boolean found = linearSearch(bogieIds, searchKey);
 
-        System.out.println("\nAfter Sorting:");
-        System.out.println(Arrays.toString(bogieNames));
+        System.out.println("\nSearching for: " + searchKey);
+        System.out.println("Bogie Found? " + found);
 
-        System.out.println("\nUC17 sorting completed...");
+        System.out.println("\nUC18 searching completed...");
     }
 }
